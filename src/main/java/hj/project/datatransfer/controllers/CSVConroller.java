@@ -1,5 +1,7 @@
 package hj.project.datatransfer.controllers;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/csv")
@@ -26,11 +30,15 @@ public class CSVConroller {
             if (FILE_TYPE.equals(file.getContentType())) {
                 InputStreamReader isr = new InputStreamReader(file.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(isr);
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
+                CSVParser csvParser = new CSVParser(reader,  CSVFormat.DEFAULT);
 
                 for (CSVRecord csvRecord : csvParser) {
-                    System.out.println(csvRecord);
+                    System.out.println(csvRecord.size());
+                    for(int i = 0; i < csvRecord.size(); i++){
+                        System.out.println(csvRecord.get(i));
+                    }
                 }
+
             }
             return "GOOD";
         } catch (UnsupportedEncodingException e) {
@@ -41,10 +49,17 @@ public class CSVConroller {
     }
 
     @PostMapping("/uploadData") // this works!
-    public String uploadData(@RequestParam("data") String file) {
+    public String uploadData(@RequestBody String file) {
 
-        return null;
+        String[] list = file.split(" ");
+
+        for(int i = 0; i < list.length; i++ ){
+            System.out.println(list[i]);
+        }
+
+        return "done";
     }
+
 
 }
 
