@@ -3,9 +3,6 @@ package hj.project.datatransfer.controllers;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,11 +19,8 @@ public class CSVConroller {
         return "Given value is a " + input;
     }
 
-    //https://www.bezkoder.com/spring-boot-upload-csv-file/
-    //https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
-
     @PostMapping("/upload") // this works!
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
 
         try {
             if (FILE_TYPE.equals(file.getContentType())) {
@@ -46,16 +40,12 @@ public class CSVConroller {
         }
     }
 
+    @PostMapping("/uploadData") // this works!
+    public String uploadData(@RequestParam("data") String file) {
+
+        return null;
+    }
+
 }
 
-/**
- * CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build(); // custom separator
- * try(CSVReader reader = new CSVReaderBuilder(
- * new FileReader(fileName))
- * .withCSVParser(csvParser)   // custom CSV parser
- * .withSkipLines(1)           // skip the first line, header info
- * .build()){
- * List<String[]> r = reader.readAll();
- * r.forEach(x -> System.out.println(Arrays.toString(x)));
- * }
- */
+
