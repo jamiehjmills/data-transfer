@@ -1,22 +1,26 @@
 package hj.project.datatransfer.controllers;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import hj.project.datatransfer.Config;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/csv")
 public class CSVConroller {
 
     public final String FILE_TYPE = "text/csv";
+
+    @Autowired
+    Config config;
 
     @PostMapping("/test") // this works! - ONLY FOR TESTING
     public String test(@RequestParam("test") String input) {
@@ -30,11 +34,11 @@ public class CSVConroller {
             if (FILE_TYPE.equals(file.getContentType())) {
                 InputStreamReader isr = new InputStreamReader(file.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(isr);
-                CSVParser csvParser = new CSVParser(reader,  CSVFormat.DEFAULT);
+                CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
 
                 for (CSVRecord csvRecord : csvParser) {
                     System.out.println(csvRecord.size());
-                    for(int i = 0; i < csvRecord.size(); i++){
+                    for (int i = 0; i < csvRecord.size(); i++) {
                         System.out.println(csvRecord.get(i));
                     }
                 }
@@ -49,17 +53,26 @@ public class CSVConroller {
     }
 
     @PostMapping("/uploadData") // this works!
-    public String uploadData(@RequestBody String file) {
+    public String uploadData(@RequestBody String data) {
 
-        String[] list = file.split(" ");
+        String[] list = data.split(" ");
 
-        for(int i = 0; i < list.length; i++ ){
+        for (int i = 0; i < list.length; i++) {
             System.out.println(list[i]);
         }
 
         return "done";
     }
 
+    @JsonProperty("database")
+    @PostMapping("/config")
+    public String getDatabase(@RequestBody Map<String, Object> data) {
+        config.setTokenize((ArrayList<String>)data.get("tokenize"));
+        config.setTokenize((ArrayList<String>)data.get("detokenize"));
+        ArrayList<Map<String,String>> list = (ArrayList<Map<String,String>>) data.get("database");
+        config.setDatabase(list);
+        return "ok";
+    }
 
 }
 
