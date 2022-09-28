@@ -1,26 +1,18 @@
 package hj.project.datatransfer.controllers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import hj.project.datatransfer.Config;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/csv")
 public class CSVConroller {
 
     public final String FILE_TYPE = "text/csv";
-
-    @Autowired
-    Config config;
 
     @PostMapping("/test") // this works! - ONLY FOR TESTING
     public String test(@RequestParam("test") String input) {
@@ -64,15 +56,6 @@ public class CSVConroller {
         return "done";
     }
 
-    @JsonProperty("database")
-    @PostMapping("/config")
-    public String getDatabase(@RequestBody Map<String, Object> data) {
-        config.setTokenize((ArrayList<String>)data.get("tokenize"));
-        config.setTokenize((ArrayList<String>)data.get("detokenize"));
-        ArrayList<Map<String,String>> list = (ArrayList<Map<String,String>>) data.get("database");
-        config.setDatabase(list);
-        return "ok";
-    }
 
 }
 

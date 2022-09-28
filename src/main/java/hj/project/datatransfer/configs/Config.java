@@ -1,4 +1,4 @@
-package hj.project.datatransfer;
+package hj.project.datatransfer.configs;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
