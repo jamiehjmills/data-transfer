@@ -26,12 +26,16 @@ class DataTransferApplicationTests {
 
         dbConnector.init(url,user,pw,table);
         ArrayList<String> row = new ArrayList<>();
-        row.add("test");
-        row.add("test2");
-        row.add("test3");
-        row.add("test4");
+        row.add("test5");
+        row.add("test6");
+        row.add("test7");
+        row.add("test8");
 
         dbConnector.saveIntoDB(row);
+
+        String test = "'hi','hi2','hi3','hi4'";
+
+
     }
 
 }

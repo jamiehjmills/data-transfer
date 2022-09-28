@@ -23,12 +23,12 @@ public class Processor {
 
     public ArrayList<String> finalDataSet;
 
-    public String start(){
+    public String start() {
 
         Map<Integer, ArrayList<String>> dataset = config.getData();
-        ArrayList<Map<String,String>> db = config.getDatabase();
+        ArrayList<Map<String, String>> db = config.getDatabase();
 
-        for(int j = 0; j< db.size(); j++){
+        for (int j = 0; j < db.size(); j++) {
 
             String url = db.get(j).get("url");
             String user = db.get(j).get("user");
@@ -39,11 +39,11 @@ public class Processor {
             dbConnector.init(url, user, pw, table);
 
             //skip the heading so start with i = 1
-            for(int i = 1; i < dataset.size(); i++){
+            for (int i = 1; i < dataset.size(); i++) {
 
                 ArrayList<String> row = dataset.get(i);
 
-                for(String cell : row){
+                for (String cell : row) {
                     finalDataSet = new ArrayList<>();
 
                     //TODO: tokenize in here
@@ -52,6 +52,7 @@ public class Processor {
                 }
 
                 //pass finalDataSet to dbConnector to save them into database
+                dbConnector.saveIntoDB(finalDataSet);
 
             }
 

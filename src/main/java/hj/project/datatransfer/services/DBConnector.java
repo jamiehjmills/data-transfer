@@ -31,19 +31,23 @@ public class DBConnector {
     }
 
     @SneakyThrows
-    public void saveIntoDB(ArrayList<String> list) {
+    public void saveIntoDB(ArrayList<String> row) {
 
         try {
 
-            String sql = String.format("INSERT INTO %s" +
-                    "VALUES(?,?,?,?)", table);
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            for(String cell: list){
-                stmt.setString(1, cell);
-                stmt.addBatch();
+            StringBuilder sb = new StringBuilder();
+
+            for(String s : row) {
+                sb.append(String.format("'%s'", s));
+                sb.append(",");
             }
-            stmt.executeBatch();
-            //tokenConn.prepareStatement(sql).execute();
+
+            String values = sb.substring(0,sb.length()-1);
+
+            String sql = String.format("INSERT INTO %s " +
+                    "VALUES(%s)", table, values);
+
+            connection.prepareStatement(sql).execute();
             //logger.info("Inserting has been completed");
 
         } catch (SQLException e) {
