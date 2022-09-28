@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class ConfigController {
+public class JsonController {
 
     @Autowired
     Config config;
