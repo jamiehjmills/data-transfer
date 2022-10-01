@@ -16,7 +16,7 @@ public class Config {
 
     public ArrayList<String> tokenize;
     public ArrayList<String> detokenize;
-    public ArrayList<Map<String,String>> database;
+    public ArrayList<Map<String, String>> database;
     public Map<Integer,ArrayList<String>> data;
 
 }

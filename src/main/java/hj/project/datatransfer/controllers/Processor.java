@@ -44,7 +44,7 @@ public class Processor {
 
         logger.info("started the process..");
 
-        if(config.getData() == null || config.getDatabase() == null) {
+        if (config.getData() == null || config.getDatabase() == null) {
             logger.info("no data or information for database is provided");
             return "no data or database is provided to process it";
         }

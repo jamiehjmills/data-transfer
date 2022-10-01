@@ -46,12 +46,12 @@ public class DBConnector {
 
             StringBuilder sb = new StringBuilder();
 
-            for(String s : row) {
+            for (String s : row) {
                 sb.append(String.format("'%s'", s));
                 sb.append(",");
             }
 
-            String values = sb.substring(0,sb.length()-1);
+            String values = sb.substring(0, sb.length() - 1);
 
             String sql = String.format("INSERT INTO %s " +
                     "VALUES(%s)", table, values);
