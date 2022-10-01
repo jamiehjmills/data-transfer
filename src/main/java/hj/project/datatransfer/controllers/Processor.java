@@ -68,6 +68,8 @@ public class Processor {
             //init database
             dbConnector.init(url, user, pw, table);
 
+            //TODO: need to fix in here
+
             //skip the heading so start with i = 1
             for (int i = 1; i < dataset.size(); i++) {
 

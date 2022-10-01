@@ -33,8 +33,8 @@ public class CSVConroller {
         int row = 0;
 
         if (config.getData() != null) {
-            logger.info("the dataset is already filled");
-            return "the dataset is already filled";
+            logger.info("the dataset has already been provided");
+            return "the dataset has already been provided";
         }
 
         try {
@@ -53,7 +53,7 @@ public class CSVConroller {
                 }
                 config.setData(dataset);
             }
-            logger.info("data is ready");
+            logger.info("the dataset is ready");
             return "GOOD";
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -67,8 +67,8 @@ public class CSVConroller {
         int row = 0;
 
         if (config.getData() != null) {
-            logger.info("the dataset is already filled");
-            return "the dataset is already filled";
+            logger.info("the dataset has already been provided");
+            return "the dataset has already been provided";
         }
 
         try {
@@ -79,7 +79,7 @@ public class CSVConroller {
                 dataset.put(row, column);
             }
             config.setData(dataset);
-            logger.info("data is ready");
+            logger.info("the dataset is ready");
             return "GOOD";
         } catch (Exception e) {
             throw new RuntimeException(e);
