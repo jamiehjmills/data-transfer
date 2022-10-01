@@ -53,7 +53,6 @@ public class CSVConroller {
                     row++;
                 }
                 config.setData(dataset);
-                test(dataset);
             }
             return "GOOD";
         } catch (UnsupportedEncodingException e) {
@@ -67,20 +66,21 @@ public class CSVConroller {
     public String uploadData(@RequestBody String data) {
 
         dataset = new HashMap<>();
+        int row = 0;
 
         if (config.getData() != null) {
             return "dataset is already filled";
         }
 
         try {
-            String[] row = data.split(" ");
-            for (int i = 0; i < row.length; i++) {
+            String[] list = data.split(" ");
+            for (int i = 0; i < list.length; i++) {
                 //System.out.println("row: " + row[i]); //java.lang.String -> TODO: save them to Map<Integer,ArrayList<String>> = Integer the number of row and ArrayList<String> is the colunm
                 ArrayList<String> column = new ArrayList<>();
-                splitRow(row[i].split(","), column); //<- TODO: need to fix it here.
+                splitRow(list[i].split(","), column);
+                dataset.put(row, column);
             }
             config.setData(dataset);
-            test(dataset);
             return "GOOD";
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -89,20 +89,10 @@ public class CSVConroller {
 
     public void splitRow(String[] row, ArrayList<String> column) {
         for (String cell : row) {
-            System.out.println("cell: "+ cell);
             column.add(cell);
         }
     }
 
-    public void test(Map<Integer, ArrayList<String>> dataset) {
-
-        for(int i = 0; i < dataset.size(); i++){
-
-            System.out.println(dataset.get(i));
-
-        }
-
-    }
 }
 
 

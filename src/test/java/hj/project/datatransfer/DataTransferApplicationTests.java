@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,6 +66,11 @@ class DataTransferApplicationTests {
 
     @Test
     void csvControllerTest() {
+
+        String test = "test2, test3, test4";
+        String[] list = test.split(",");
+
+        System.out.println(Arrays.toString(list));
 
         //TODO: need to think how we can do the testing here. Probably we have to use a mockup testing class
     }
