@@ -52,9 +52,6 @@ public class Processor {
         Map<Integer, ArrayList<String>> dataset = config.getData();
         ArrayList<Map<String, String>> db = config.getDatabase();
 
-        System.out.println("db:" + db);
-        System.out.println("dataset:" + dataset);
-
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
         for (int j = 0; j < db.size(); j++) {
@@ -69,34 +66,30 @@ public class Processor {
             //init database
             dbConnector.init(url, user, pw, table);
 
-            //TODO: need to fix in here
+            logger.info("start inserting the rows of the dataset to the database");
 
             //skip the heading so start with i = 1
             for (int i = 1; i < dataset.size(); i++) {
 
                 ArrayList<String> row = dataset.get(i);
-                System.out.println("row:" + row);
+                logger.info(String.format("row : %s", row));
+
+                finalDataRow = new ArrayList<>();
 
                 for (String cell : row) {
-                    finalDataRow = new ArrayList<>();
+                    System.out.println("cell:" + cell);
 
                     //TODO: tokenize in here
+                    //finalDataRow.add(toTokenizeOrDeTokenize(cell))
 
                     finalDataRow.add(cell);
                 }
-
-                logger.info("start inserting the data to the database");
-
                 //pass finalDataSet to dbConnector to save them into database
                 dbConnector.saveIntoDB(finalDataRow);
-
             }
-
+            logger.info("Inserting the rows to the database has been completed");
         }
-
         return "OK";
-
     }
-
 
 }

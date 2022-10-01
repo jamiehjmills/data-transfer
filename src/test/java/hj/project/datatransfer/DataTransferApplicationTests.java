@@ -46,6 +46,7 @@ class DataTransferApplicationTests {
         row.add("test7");
         row.add("test8");
 
+
         dbConnector.saveIntoDB(row);
 
         String test = "'hi','hi2','hi3','hi4'";

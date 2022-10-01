@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Service
@@ -26,11 +25,6 @@ public class DBConnector {
 
     @SneakyThrows
     public void init(String url, String user, String pw, String table) {
-
-        System.out.println("url:" + url);
-        System.out.println("user:" + user);
-        System.out.println("pw:" + pw);
-        System.out.println("table:" + table);
 
         connection = DriverManager.getConnection(url, user, pw);
         this.table = table;
@@ -57,9 +51,9 @@ public class DBConnector {
                     "VALUES(%s)", table, values);
 
             connection.prepareStatement(sql).execute();
-            logger.info("Inserting the data to the database has been completed");
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            logger.info("Cannot save the row to the database");
             throw new RuntimeException(e);
         }
 
