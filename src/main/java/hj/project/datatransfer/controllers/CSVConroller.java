@@ -72,11 +72,12 @@ public class CSVConroller {
         }
 
         try {
-            String[] list = data.split(" ");
+            String[] list = data.split("\\r?\\n");
             for (int i = 0; i < list.length; i++) {
                 ArrayList<String> column = new ArrayList<>();
                 splitRow(list[i].split(","), column);
                 dataset.put(row, column);
+                row++;
             }
             config.setData(dataset);
             logger.info("the dataset is ready");

@@ -36,7 +36,7 @@ public class Processor {
     public final String PW = "password";
     public final String TABLE = "table";
 
-    public ArrayList<String> finalDataSet;
+    public ArrayList<String> finalDataRow;
     private static final Logger logger = LoggerFactory.getLogger(Processor.class);
 
     @PostMapping("/start")
@@ -53,6 +53,7 @@ public class Processor {
         ArrayList<Map<String, String>> db = config.getDatabase();
 
         System.out.println("db:" + db);
+        System.out.println("dataset:" + dataset);
 
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
@@ -74,19 +75,20 @@ public class Processor {
             for (int i = 1; i < dataset.size(); i++) {
 
                 ArrayList<String> row = dataset.get(i);
+                System.out.println("row:" + row);
 
                 for (String cell : row) {
-                    finalDataSet = new ArrayList<>();
+                    finalDataRow = new ArrayList<>();
 
                     //TODO: tokenize in here
 
-                    finalDataSet.add(cell);
+                    finalDataRow.add(cell);
                 }
 
                 logger.info("start inserting the data to the database");
 
                 //pass finalDataSet to dbConnector to save them into database
-                dbConnector.saveIntoDB(finalDataSet);
+                dbConnector.saveIntoDB(finalDataRow);
 
             }
 
