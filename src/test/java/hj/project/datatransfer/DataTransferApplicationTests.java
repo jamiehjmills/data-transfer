@@ -17,12 +17,11 @@ import java.util.ArrayList;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(locations="classpath:application-token.properties")
+@TestPropertySource(locations = "classpath:application-token.properties")
 class DataTransferApplicationTests {
 
     @Autowired
     DBConnector dbConnector;
-
 
     MainTokenizer tokenize;
 
@@ -30,7 +29,6 @@ class DataTransferApplicationTests {
     PostgresConnection postgresConnection;
     @Autowired
     Base64Hash hashCreator;
-
 
     @Test
     void contextLoads() {
@@ -40,7 +38,7 @@ class DataTransferApplicationTests {
         String pw = "postgres123";
         String table = "data_transfer";
 
-        dbConnector.init(url,user,pw,table);
+        dbConnector.init(url, user, pw, table);
         ArrayList<String> row = new ArrayList<>();
         row.add("test5");
         row.add("test6");
@@ -51,19 +49,24 @@ class DataTransferApplicationTests {
 
         String test = "'hi','hi2','hi3','hi4'";
 
-
     }
 
     @Test
-    void token(){
+    void token() {
 
         String original = "testsrsss";
         tokenize = new Tokenize(postgresConnection, hashCreator);
         tokenize.init();
         String token = tokenize.encode(original);
         Assert.assertEquals("3562157357135634-141357", token);
-        Assert.assertEquals(original,tokenize.decode(token));
+        Assert.assertEquals(original, tokenize.decode(token));
 
+    }
+
+    @Test
+    void csvControllerTest() {
+
+        //TODO: need to think how we can do the testing here. Probably we have to use a mockup testing class
     }
 
 }

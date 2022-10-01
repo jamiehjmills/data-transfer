@@ -2,8 +2,11 @@ package hj.project.datatransfer.controllers;
 
 import hj.project.datatransfer.configs.Config;
 import hj.project.datatransfer.services.DBConnector;
+import hj.project.token.services.MainTokenizer;
+import hj.project.token.services.connections.PostgresConnection;
+import hj.project.token.services.hashing.Base64Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -18,11 +21,17 @@ public class Processor {
     @Autowired
     DBConnector dbConnector;
 
-    //@Autowired
-    //Tokenize tokenize TODO: need to implement the service into here
+    MainTokenizer tokenize;
+
+    @Autowired
+    PostgresConnection postgresConnection;
+
+    @Autowired
+    Base64Hash hashCreator;
 
     public ArrayList<String> finalDataSet;
 
+    @PostMapping("/start") //TODO: need to do a testing to ensure it works
     public String start() {
 
         Map<Integer, ArrayList<String>> dataset = config.getData();
