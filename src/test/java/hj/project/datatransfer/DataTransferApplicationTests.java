@@ -34,7 +34,7 @@ class DataTransferApplicationTests {
     @Test
     void contextLoads() {
 
-        String url = "jdbc:postgresql://jamie-1.ckeesvebqsog.ap-southeast-2.rds.amazonaws.com:5432/postgres";
+        String url = "";
         String user = "postgres";
         String pw = "postgres123";
         String table = "data_transfer";
