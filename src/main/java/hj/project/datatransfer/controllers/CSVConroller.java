@@ -4,14 +4,14 @@ import hj.project.datatransfer.configs.Config;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +21,8 @@ import java.util.Map;
 public class CSVConroller {
 
     public final String FILE_TYPE = "text/csv";
-
     public Map<Integer, ArrayList<String>> dataset;
-
+    private static final Logger logger = LoggerFactory.getLogger(CSVConroller.class);
     @Autowired
     Config config;
 
@@ -34,7 +33,8 @@ public class CSVConroller {
         int row = 0;
 
         if (config.getData() != null) {
-            return "dataset is already filled";
+            logger.info("the dataset is already filled");
+            return "the dataset is already filled";
         }
 
         try {
@@ -44,7 +44,6 @@ public class CSVConroller {
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
 
                 for (CSVRecord csvRecord : csvParser) {
-                    // Integer the number of row and ArrayList<String> is the column
                     ArrayList<String> column = new ArrayList<>();
                     dataset.put(row, column);
                     for (int i = 0; i < csvRecord.size(); i++) {
@@ -54,10 +53,9 @@ public class CSVConroller {
                 }
                 config.setData(dataset);
             }
+            logger.info("data is ready");
             return "GOOD";
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -69,18 +67,19 @@ public class CSVConroller {
         int row = 0;
 
         if (config.getData() != null) {
-            return "dataset is already filled";
+            logger.info("the dataset is already filled");
+            return "the dataset is already filled";
         }
 
         try {
             String[] list = data.split(" ");
             for (int i = 0; i < list.length; i++) {
-                //System.out.println("row: " + row[i]); //java.lang.String -> TODO: save them to Map<Integer,ArrayList<String>> = Integer the number of row and ArrayList<String> is the colunm
                 ArrayList<String> column = new ArrayList<>();
                 splitRow(list[i].split(","), column);
                 dataset.put(row, column);
             }
             config.setData(dataset);
+            logger.info("data is ready");
             return "GOOD";
         } catch (Exception e) {
             throw new RuntimeException(e);

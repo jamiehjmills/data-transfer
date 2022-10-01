@@ -2,6 +2,8 @@ package hj.project.datatransfer.controllers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hj.project.datatransfer.configs.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,15 +19,23 @@ public class JsonController {
 
     @Autowired
     Config config;
+    private static final Logger logger = LoggerFactory.getLogger(JsonController.class);
 
     @JsonProperty("database")
     @PostMapping("/config")
     public String getDatabase(@RequestBody Map<String, Object> data) {
-        config.setTokenize((ArrayList<String>)data.get("tokenize"));
-        config.setTokenize((ArrayList<String>)data.get("detokenize"));
-        ArrayList<Map<String,String>> list = (ArrayList<Map<String,String>>) data.get("database");
-        config.setDatabase(list);
-        return "ok";
+
+        try {
+            config.setTokenize((ArrayList<String>) data.get("tokenize"));
+            config.setTokenize((ArrayList<String>) data.get("detokenize"));
+            ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) data.get("database");
+            config.setDatabase(list);
+            logger.info("received configuration for toeknize, detokenize and database");
+            return "ok";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

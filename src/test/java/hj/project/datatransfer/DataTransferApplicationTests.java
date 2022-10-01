@@ -50,6 +50,7 @@ class DataTransferApplicationTests {
 
         String test = "'hi','hi2','hi3','hi4'";
 
+        //jdbc:postgresql://localhost:5454/postgres
     }
 
     @Test

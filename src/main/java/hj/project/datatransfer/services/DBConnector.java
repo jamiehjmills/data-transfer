@@ -2,15 +2,15 @@ package hj.project.datatransfer.services;
 
 import hj.project.datatransfer.configs.Config;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 
 @Service
 public class DBConnector {
@@ -22,11 +22,20 @@ public class DBConnector {
 
     private Connection connection;
 
+    private static final Logger logger = LoggerFactory.getLogger(DBConnector.class);
+
     @SneakyThrows
     public void init(String url, String user, String pw, String table) {
 
+        System.out.println("url:" + url);
+        System.out.println("user:" + user);
+        System.out.println("pw:" + pw);
+        System.out.println("table:" + table);
+
         connection = DriverManager.getConnection(url, user, pw);
         this.table = table;
+
+        logger.info("initiate the database process..");
 
     }
 
@@ -48,12 +57,11 @@ public class DBConnector {
                     "VALUES(%s)", table, values);
 
             connection.prepareStatement(sql).execute();
-            //logger.info("Inserting has been completed");
+            logger.info("Inserting the data to the database has been completed");
 
         } catch (SQLException e) {
-            //logger.warn(e.getMessage());
+            throw new RuntimeException(e);
         }
-
 
     }
 
