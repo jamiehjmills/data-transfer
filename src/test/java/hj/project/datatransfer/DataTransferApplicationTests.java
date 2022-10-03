@@ -35,8 +35,8 @@ class DataTransferApplicationTests {
     void contextLoads() {
 
         String url = "";
-        String user = "postgres";
-        String pw = "postgres123";
+        String user = "";
+        String pw = "";
         String table = "data_transfer";
 
         dbConnector.init(url, user, pw, table);

@@ -89,6 +89,7 @@ public class Processor {
             }
             logger.info("Inserting the rows to the database has been completed");
         }
+        logger.info("Completed the whole process. You can close it now.");
         return "OK";
     }
 
