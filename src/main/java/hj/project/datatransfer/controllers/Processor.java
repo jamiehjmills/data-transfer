@@ -74,18 +74,24 @@ public class Processor {
                 ArrayList<String> row = dataset.get(i);
                 logger.info(String.format("row : %s", row));
 
+                //TODO: should move the for loop (below) to TokenizerOrDeTokenizer (only need it when they are required)
                 finalDataRow = new ArrayList<>();
 
-                for (String cell : row) {
-                    System.out.println("cell:" + cell);
-
-                    //TODO: tokenize in here
-                    //finalDataRow.add(toTokenizeOrDeTokenize(cell))
-
-                    finalDataRow.add(cell);
+//                for (String cell : row) {
+//                    System.out.println("cell:" + cell);
+//
+//                    //TODO: tokenize in here
+//                    //finalDataRow.add(toTokenizeOrDeTokenize(cell))
+//
+//                    finalDataRow.add(cell);
+//                }
+                if (config.getTokenize() == null && config.getDetokenize() == null) {
+                    dbConnector.saveIntoDB(finalDataRow);
+                } else {
+                    //dbConnector.saveIntoDB(tokenizerOrDeTokenizer.init(finalDataRow));
                 }
                 //pass finalDataSet to dbConnector to save them into database
-                dbConnector.saveIntoDB(finalDataRow);
+                //dbConnector.saveIntoDB(finalDataRow);
             }
             logger.info("Inserting the rows to the database has been completed");
         }
