@@ -3,6 +3,7 @@ package hj.project.datatransfer.controllers;
 import hj.project.datatransfer.configs.Config;
 import hj.project.datatransfer.services.DBConnector;
 import hj.project.token.services.MainTokenizer;
+import hj.project.token.services.Tokenize;
 import hj.project.token.services.connections.PostgresConnection;
 import hj.project.token.services.hashing.Base64Hash;
 import org.slf4j.Logger;
@@ -72,6 +73,7 @@ public class Processor {
             dbConnector.init(url, user, pw, table);
 
             //init the tokenizer service
+            tokenizer = new Tokenize(postgresConnection, hashCreator);
             tokenizer.init();
 
             logger.info("start inserting the rows of the dataset to the database");
