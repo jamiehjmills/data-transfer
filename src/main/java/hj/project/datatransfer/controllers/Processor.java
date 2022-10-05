@@ -60,6 +60,7 @@ public class Processor {
 
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
+        //TODO: need to
         for (int j = 0; j < db.size(); j++) {
 
             String url = db.get(j).get(URL);
