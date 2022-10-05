@@ -23,13 +23,16 @@ public class Processor {
     @Autowired
     DBConnector dbConnector;
 
-    MainTokenizer tokenize;
+    MainTokenizer tokenizer;
 
     @Autowired
     PostgresConnection postgresConnection;
 
     @Autowired
     Base64Hash hashCreator;
+
+    @Autowired
+    TokenizerOrDeTokenizer tokenizerOrDeTokenizer;
 
     public final String URL = "url";
     public final String USER = "username";
@@ -51,6 +54,8 @@ public class Processor {
 
         Map<Integer, ArrayList<String>> dataset = config.getData();
         ArrayList<Map<String, String>> db = config.getDatabase();
+        ArrayList<String> tokenize = config.getTokenize();
+        ArrayList<String> deTokenize = config.getDetokenize();
 
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
@@ -66,6 +71,9 @@ public class Processor {
             //init database
             dbConnector.init(url, user, pw, table);
 
+            //init the tokenizer service
+            tokenizer.init();
+
             logger.info("start inserting the rows of the dataset to the database");
 
             //skip the heading so start with i = 1
@@ -74,24 +82,12 @@ public class Processor {
                 ArrayList<String> row = dataset.get(i);
                 logger.info(String.format("row : %s", row));
 
-                //TODO: should move the for loop (below) to TokenizerOrDeTokenizer (only need it when they are required)
-                finalDataRow = new ArrayList<>();
+                dbConnector.saveIntoDB(
+                        tokenizerOrDeTokenizer.init(row,
+                        tokenize,
+                        deTokenize,
+                        tokenizer));
 
-//                for (String cell : row) {
-//                    System.out.println("cell:" + cell);
-//
-//                    //TODO: tokenize in here
-//                    //finalDataRow.add(toTokenizeOrDeTokenize(cell))
-//
-//                    finalDataRow.add(cell);
-//                }
-                if (config.getTokenize() == null && config.getDetokenize() == null) {
-                    dbConnector.saveIntoDB(finalDataRow);
-                } else {
-                    //dbConnector.saveIntoDB(tokenizerOrDeTokenizer.init(finalDataRow));
-                }
-                //pass finalDataSet to dbConnector to save them into database
-                //dbConnector.saveIntoDB(finalDataRow);
             }
             logger.info("Inserting the rows to the database has been completed");
         }

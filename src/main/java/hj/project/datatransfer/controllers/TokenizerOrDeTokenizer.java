@@ -8,11 +8,14 @@ import java.util.ArrayList;
 @Service
 public class TokenizerOrDeTokenizer {
 
+//TODO: need to implement them to Process.java and also doing the test
 
     public ArrayList<String> init(ArrayList<String> list,
                                   ArrayList<String> tokenize,
                                   ArrayList<String> deTokenize,
                                   MainTokenizer tokenizer) {
+
+        if (tokenize == null && deTokenize == null) return list;
 
         if (theyAreDuplicates(tokenize, deTokenize)) {
             throw new RuntimeException("the values from each tokenize and deTokenize shouldn't be overlapped");
