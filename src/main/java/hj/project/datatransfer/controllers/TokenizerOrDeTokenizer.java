@@ -8,8 +8,6 @@ import java.util.ArrayList;
 @Service
 public class TokenizerOrDeTokenizer {
 
-//TODO: need to implement them to Process.java and also doing the test
-
     public ArrayList<String> init(ArrayList<String> list,
                                   ArrayList<String> tokenize,
                                   ArrayList<String> deTokenize,
@@ -17,50 +15,41 @@ public class TokenizerOrDeTokenizer {
 
         if (tokenize == null && deTokenize == null) return list;
 
-        if (theyAreDuplicates(tokenize, deTokenize)) {
-            throw new RuntimeException("the values from each tokenize and deTokenize shouldn't be overlapped");
-        }
+//        if (theyAreDuplicates(tokenize, deTokenize)) {
+//            throw new RuntimeException("the values from each tokenize and deTokenize shouldn't be overlapped");
+//        }
 
-        if (tokenize != null || deTokenize != null) updateElements(list, tokenize, deTokenize, tokenizer, true);
-
-        return list;
+        return updateElements(list, tokenize, deTokenize, tokenizer);
 
     }
 
-    public void updateElements(ArrayList<String> list,
+    //TODO: need to fix the issue
+
+    public ArrayList<String> updateElements(ArrayList<String> list,
                                ArrayList<String> tokenize,
-                               ArrayList<String> deTokenize,
-                               MainTokenizer tokenizer,
-                               boolean isTokenize) {
-
-        if (isTokenize) {
-            for (int i = 0; i < list.size(); i++) {
-                if (tokenize.contains(i)) {
-                    list.set(i, tokenizer.encode(list.get(i)));
-                }
-            }
-        } else {
-            updateElements(list, deTokenize, tokenizer);
-        }
-    }
-
-    public void updateElements(ArrayList<String> list,
                                ArrayList<String> deTokenize,
                                MainTokenizer tokenizer) {
 
+        ArrayList<String> afterTokenApplied = new ArrayList<>();
+
         for (int i = 0; i < list.size(); i++) {
-            if (deTokenize.contains(i)) {
-                list.set(i, tokenizer.decode(list.get(i)));
+            afterTokenApplied.add(list.get(i));
+            if (tokenize.contains(i)) {
+                afterTokenApplied.set(i, tokenizer.decode(list.get(i)));
+            } else if (deTokenize.contains(i)) {
+                afterTokenApplied.set(i, tokenizer.decode(list.get(i)));
             }
         }
+
+        return afterTokenApplied;
 
     }
 
     public Boolean theyAreDuplicates(ArrayList<String> tokenize,
                                      ArrayList<String> deTokenize) {
 
-        for (int i = 0; i < tokenize.size(); i++) {
-            if (deTokenize.contains(tokenize.get(i))) {
+        for (String index : tokenize) {
+            if (deTokenize.contains(index)) {
                 return true;
             }
         }

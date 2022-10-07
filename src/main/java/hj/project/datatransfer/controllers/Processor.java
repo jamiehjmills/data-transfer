@@ -60,7 +60,7 @@ public class Processor {
 
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
-        //TODO: need to
+        //TODO: need to think how to run it sychrnoically
         for (int j = 0; j < db.size(); j++) {
 
             String url = db.get(j).get(URL);
@@ -90,7 +90,6 @@ public class Processor {
                         tokenize,
                         deTokenize,
                         tokenizer));
-
             }
             logger.info("Inserting the rows to the database has been completed");
         }

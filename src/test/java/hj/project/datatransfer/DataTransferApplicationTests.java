@@ -77,4 +77,9 @@ class DataTransferApplicationTests {
         //TODO: need to think how we can do the testing here. Probably we have to use a mockup testing class
     }
 
+    @Test
+    void anyTest() {
+
+    }
+
 }
