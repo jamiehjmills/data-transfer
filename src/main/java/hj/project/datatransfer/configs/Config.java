@@ -14,8 +14,8 @@ import java.util.Map;
 @Component
 public class Config {
 
-    public ArrayList<String> tokenize;
-    public ArrayList<String> detokenize;
+    public ArrayList<Integer> tokenize;
+    public ArrayList<Integer> detokenize;
     public ArrayList<Map<String, String>> database;
     public Map<Integer,ArrayList<String>> data;
 

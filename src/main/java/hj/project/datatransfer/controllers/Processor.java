@@ -2,6 +2,7 @@ package hj.project.datatransfer.controllers;
 
 import hj.project.datatransfer.configs.Config;
 import hj.project.datatransfer.services.DBConnector;
+import hj.project.datatransfer.services.TokenizerOrDeTokenizer;
 import hj.project.token.services.MainTokenizer;
 import hj.project.token.services.Tokenize;
 import hj.project.token.services.connections.PostgresConnection;
@@ -55,12 +56,12 @@ public class Processor {
 
         Map<Integer, ArrayList<String>> dataset = config.getData();
         ArrayList<Map<String, String>> db = config.getDatabase();
-        ArrayList<String> tokenize = config.getTokenize();
-        ArrayList<String> deTokenize = config.getDetokenize();
+        ArrayList<Integer> tokenize = config.getTokenize();
+        ArrayList<Integer> deTokenize = config.getDetokenize();
 
         logger.info(String.format("total %d of the database(s) will be processed", db.size()));
 
-        //TODO: need to think how to run it sychrnoically
+
         for (int j = 0; j < db.size(); j++) {
 
             String url = db.get(j).get(URL);

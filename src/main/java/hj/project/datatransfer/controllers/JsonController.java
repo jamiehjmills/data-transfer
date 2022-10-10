@@ -26,8 +26,8 @@ public class JsonController {
     public String getDatabase(@RequestBody Map<String, Object> data) {
 
         try {
-            config.setTokenize((ArrayList<String>) data.get("tokenize"));
-            config.setDetokenize((ArrayList<String>) data.get("detokenize"));
+            config.setTokenize((ArrayList<Integer>) data.get("tokenize"));
+            config.setDetokenize((ArrayList<Integer>) data.get("detokenize"));
             ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) data.get("database");
             config.setDatabase(list);
             logger.info("received configuration for toeknize, detokenize and database");
