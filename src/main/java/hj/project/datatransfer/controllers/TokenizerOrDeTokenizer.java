@@ -15,15 +15,10 @@ public class TokenizerOrDeTokenizer {
 
         if (tokenize == null && deTokenize == null) return list;
 
-//        if (theyAreDuplicates(tokenize, deTokenize)) {
-//            throw new RuntimeException("the values from each tokenize and deTokenize shouldn't be overlapped");
-//        }
-
         return updateElements(list, tokenize, deTokenize, tokenizer);
 
     }
 
-    //TODO: need to fix the issue
 
     public ArrayList<String> updateElements(ArrayList<String> list,
                                ArrayList<String> tokenize,
@@ -32,10 +27,14 @@ public class TokenizerOrDeTokenizer {
 
         ArrayList<String> afterTokenApplied = new ArrayList<>();
 
+//        if (theyAreDuplicates(tokenize, deTokenize)) {
+//            throw new RuntimeException("tokenize and deTokenize should not overlap their values");
+//        }
+
         for (int i = 0; i < list.size(); i++) {
             afterTokenApplied.add(list.get(i));
             if (tokenize.contains(i)) {
-                afterTokenApplied.set(i, tokenizer.decode(list.get(i)));
+                afterTokenApplied.set(i, tokenizer.encode(list.get(i)));
             } else if (deTokenize.contains(i)) {
                 afterTokenApplied.set(i, tokenizer.decode(list.get(i)));
             }
